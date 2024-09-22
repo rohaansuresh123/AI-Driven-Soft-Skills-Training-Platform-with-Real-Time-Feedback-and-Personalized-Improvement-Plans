@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Screen</title>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #66a6ff, #89f7fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container Styling */
+        .signup-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Headings and Labels */
+        h2 {
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #185a9d;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #66a6ff;
+            outline: none;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        /* Buttons and Links */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #66a6ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #185a9d;
+        }
+
+        .back-to-login {
+            margin-top: 15px;
+            color: #185a9d;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .back-to-login:hover {
+            text-decoration: underline;
+        }
+
+        /* AI Assistant Icon */
+        .genai-assistant {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #66a6ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* AI Modal */
+        .genai-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+
+        .genai-modal p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .genai-modal button {
+            background: #185a9d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>Registration Screen</h2>
+        <div class="genai-assistant" id="genaiBtn" title="Ask AI">?</div>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                <div class="error" id="fullNameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <div class="error" id="emailError"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+                <div class="error" id="passwordError"></div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                <div class="error" id="confirmPasswordError"></div>
+            </div>
+            <button type="submit">Sign Up</button>
+            <a href="#" class="back-to-login">Back to Login</a>
+        </form>
+    </div>
+
+    <!-- Generative AI Modal -->
+    <div class="genai-modal" id="genaiModal">
+        <p>💡 **Tips for Registration:**</p>
+        <p>- Ensure your full name matches your official documents.</p>
+        <p>- Use a valid email address for verification.</p>
+        <p>- Create a strong password with at least 8 characters, including uppercase, lowercase, numbers, and special characters.</p>
+        <button onclick="closeGenaiModal()">Close</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elements and Event Listeners
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const signupForm = document.getElementById('signupForm');
+            const genaiBtn = document.getElementById('genaiBtn');
+            const genaiModal = document.getElementById('genaiModal');
+
+            // Validation Function
+            const validateField = (input, errorDiv, errorMessage) => {
+                input.value.trim() === '' ? errorDiv.textContent = errorMessage : errorDiv.textContent = '';
+            };
+
+            // Form Validation and Submission
+            signupForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                // Clear previous errors
+                document.querySelectorAll('.error').forEach(error => error.textContent = '');
+
+                let isValid = true;
+
+                // Full Name Validation
+                validateField(fullNameInput, document.getElementById('fullNameError'), 'Full name is required.');
+
+                // Email Validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailInput.value)) {
+                    document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                    isValid = false;
+                }
+
+                // Password Validation
+                if (passwordInput.value.length < 8) {
+                    document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long.';
+                    isValid = false;
+                }
+
+                // Confirm Password Validation
+                if (confirmPasswordInput.value !== passwordInput.value) {
+                    document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    alert('Registration successful!');
+                    // Submit form or send data to server
+                }
+            });
+
+            // AI Modal Show/Hide Functions
+            genaiBtn.addEventListener('click', () => genaiModal.style.display = 'block');
+
+            window.closeGenaiModal = () => genaiModal.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
