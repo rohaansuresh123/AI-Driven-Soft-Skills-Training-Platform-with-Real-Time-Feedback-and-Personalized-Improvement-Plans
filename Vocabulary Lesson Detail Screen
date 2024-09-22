@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Skills Enhancement - Vocabulary Lesson Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .lesson-detail-container {
+            width: 80%;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-title {
+            text-align: center;
+            font-size: 28px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .lesson-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-level {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+
+        .lesson-content {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .start-lesson-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+        }
+
+        .start-lesson-button:hover {
+            background: #0056b3;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Chatbot Icon Styles */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .chatbot-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .chatbot-icon:hover {
+            background: #0056b3;
+        }
+
+        /* Chatbot Widget Styles */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 300px;
+            max-height: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chatbot-header {
+            background: #007bff;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .chatbot-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chatbot-input textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .chatbot-input button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chatbot-message {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .chatbot-message.bot {
+            justify-content: flex-start;
+        }
+
+        .chatbot-message.user {
+            justify-content: flex-end;
+        }
+
+        .chatbot-message .message-content {
+            background: #f1f3f5;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .chatbot-message.user .message-content {
+            background: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lesson-detail-container">
+        <div class="lesson-title">Lesson Title: Advanced Vocabulary</div>
+        <div class="difficulty-level">Difficulty Level: Advanced</div>
+        <div class="lesson-description">
+            This lesson covers advanced vocabulary that is essential for professional communication. You will learn new terms and phrases used in various contexts.
+        </div>
+        <div class="lesson-content">
+            <h3>Lesson Content:</h3>
+            <p>Throughout this lesson, you will engage with text, audio clips, and interactive quizzes to enhance your vocabulary effectively.</p>
+            <ul>
+                <li>Introduction to Advanced Terms</li>
+                <li>Contextual Usage of Vocabulary</li>
+                <li>Quizzes and Interactive Exercises</li>
+            </ul>
+        </div>
+        <button class="start-lesson-button" onclick="startLesson()">Start Lesson</button>
+    </div>
+
+    <!-- Chatbot Icon -->
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/chat.png" alt="Chatbot Icon">
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbot-widget">
+        <div class="chatbot-header">Don - AI Assistant</div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="chatbot-message bot">
+                <div class="message-content">Hello! I'm Don. How can I assist you with your vocabulary lessons today?</div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <textarea id="chatbot-input" rows="1" placeholder="Type your message..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to simulate starting a lesson
+        function startLesson() {
+            alert('Starting the lesson!');
+            // Here you can redirect to the lesson content page
+            // window.location.href = 'lesson-content.html';
+        }
+
+        // Function to toggle chatbot visibility
+        function toggleChatbot() {
+            const chatbotWidget = document.getElementById('chatbot-widget');
+            chatbotWidget.style.display = chatbotWidget.style.display === 'none' || chatbotWidget.style.display === '' ? 'flex' : 'none';
+        }
+
+        // Function to handle chatbot messages
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            if (message === '') return;
+
+            const chatbotBody = document.getElementById('chatbot-body');
+
+            // User message
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('chatbot-message', 'user');
+            userMessage.innerHTML = `<div class="message-content">${message}</div>`;
+            chatbotBody.appendChild(userMessage);
+
+            // Clear input
+            input.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('chatbot-message', 'bot');
+                botMessage.innerHTML = `<div class="message-content">I'm here to help! What would you like to know about this lesson?</div>`;
+                chatbotBody.appendChild(botMessage);
+                chatbotBody.scrollTop = chatbotBody.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
