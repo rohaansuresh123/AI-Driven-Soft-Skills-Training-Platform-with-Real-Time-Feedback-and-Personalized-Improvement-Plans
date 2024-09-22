@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Training App - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 1rem;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .checkbox-container label {
+            margin-top: 0;
+            margin-left: 0.5rem;
+        }
+        button {
+            margin-top: 1.5rem;
+            padding: 0.75rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .links a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: red;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>English Training App Login</h2>
+        <form id="loginForm">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" placeholder="Enter your username or email" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">Remember Me</label>
+            </div>
+            
+            <button type="submit">Login</button>
+        </form>
+        <div class="links">
+            <a href="#" id="forgotPassword">Forgot Password?</a>
+            <a href="#" id="signUp">Sign Up</a>
+        </div>
+        <div id="errorMessage" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            errorMessage.textContent = '';
+
+            // Validation
+            if (!username) {
+                errorMessage.textContent = 'Username or Email is required.';
+                return;
+            }
+
+            if (!password) {
+                errorMessage.textContent = 'Password is required.';
+                return;
+            }
+
+            if (password.length < 8) {
+                errorMessage.textContent = 'Password must be at least 8 characters long.';
+                return;
+            }
+
+            // Email format validation (basic)
+            if (username.includes('@') && !isValidEmail(username)) {
+                errorMessage.textContent = 'Please enter a valid email address.';
+                return;
+            }
+
+            // Simulating authentication (replace with actual API call)
+            authenticateUser(username, password, rememberMe);
+        });
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function authenticateUser(username, password, rememberMe) {
+            // Simulated authentication logic (replace with actual API call)
+            setTimeout(() => {
+                if (username === 'admin@example.com' && password === 'adminpass') {
+                    // Admin login successful
+                    redirectToDashboard('admin');
+                } else if (username === 'user@example.com' && password === 'userpass') {
+                    // User login successful
+                    redirectToDashboard('user');
+                } else {
+                    // Authentication failed
+                    document.getElementById('errorMessage').textContent = 'Invalid username or password.';
+                }
+            }, 1000); // Simulating network delay
+        }
+
+        function redirectToDashboard(role) {
+            // Redirect to the appropriate dashboard based on user role
+            if (role === 'admin') {
+                window.location.href = '/admin-dashboard.html';
+            } else {
+                window.location.href = '/user-dashboard.html';
+            }
+        }
+
+        // Forgot Password and Sign Up links (replace with actual functionality)
+        document.getElementById('forgotPassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Redirecting to password recovery page...');
+            // Implement actual redirection here
+        });
+
+        document.getElementById('signUp').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Redirecting to registration page...');
+            // Implement actual redirection here
+        });
+    </script>
+</body>
+</html>
