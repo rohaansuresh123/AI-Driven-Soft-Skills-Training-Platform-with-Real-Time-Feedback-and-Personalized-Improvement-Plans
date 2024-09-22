@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Skills Enhancement - Test Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .reports-container {
+            width: 80%;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            text-align: center;
+            font-size: 32px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .search-filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .filter-options {
+            width: 35%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .filter-options select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .report-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f3f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .report-item:hover {
+            background: #e9ecef;
+        }
+
+        .report-item button {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .report-item button:hover {
+            background: #0056b3;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Chatbot Icon Styles */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .chatbot-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .chatbot-icon:hover {
+            background: #0056b3;
+        }
+
+        /* Chatbot Widget Styles */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 300px;
+            max-height: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chatbot-header {
+            background: #007bff;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .chatbot-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chatbot-input textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .chatbot-input button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .chatbot-message {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .chatbot-message.bot {
+            justify-content: flex-start;
+        }
+
+        .chatbot-message.user {
+            justify-content: flex-end;
+        }
+
+        .chatbot-message .message-content {
+            background: #f1f3f5;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .chatbot-message.user .message-content {
+            background: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reports-container">
+        <div class="section-header">Test Reports</div>
+
+        <div class="search-filter-bar">
+            <input type="text" class="search-bar" placeholder="Search for reports..." id="search-bar">
+            <div class="filter-options">
+                <select id="filter-date">
+                    <option value="all">All Dates</option>
+                    <option value="last-week">Last Week</option>
+                    <option value="last-month">Last Month</option>
+                </select>
+                <select id="filter-type">
+                    <option value="all">All Types</option>
+                    <option value="vocabulary">Vocabulary</option>
+                    <option value="speech">Speech</option>
+                    <option value="pronunciation">Pronunciation</option>
+                </select>
+            </div>
+        </div>
+
+        <ul class="report-list" id="report-list">
+            <li class="report-item">
+                <span>Report 1: Vocabulary Assessment Results</span>
+                <button onclick="viewReport('Report 1: Vocabulary Assessment Results')">View Report</button>
+            </li>
+            <li class="report-item">
+                <span>Report 2: Speech Skills Evaluation Results</span>
+                <button onclick="viewReport('Report 2: Speech Skills Evaluation Results')">View Report</button>
+            </li>
+            <li class="report-item">
+                <span>Report 3: Pronunciation Proficiency Results</span>
+                <button onclick="viewReport('Report 3: Pronunciation Proficiency Results')">View Report</button>
+            </li>
+            <!-- More reports can be added here -->
+        </ul>
+
+        <div class="footer">
+            © 2023 Soft Skills Enhancement Application. All rights reserved.
+        </div>
+    </div>
+
+    <!-- Chatbot Icon -->
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/chat.png" alt="Chatbot Icon">
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbot-widget">
+        <div class="chatbot-header">Don - AI Assistant</div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="chatbot-message bot">
+                <div class="message-content">Hello! I'm Don. How can I assist you with your test reports today?</div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <textarea id="chatbot-input" rows="1" placeholder="Type your message..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to simulate viewing a report
+        function viewReport(reportName) {
+            alert('Viewing ' + reportName);
+        }
+
+        // Function to toggle chatbot visibility
+        function toggleChatbot() {
+            const chatbotWidget = document.getElementById('chatbot-widget');
+            chatbotWidget.style.display = chatbotWidget.style.display === 'none' || chatbotWidget.style.display === '' ? 'flex' : 'none';
+        }
+
+        // Function to handle chatbot messages
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            if (message === '') return;
+
+            const chatbotBody = document.getElementById('chatbot-body');
+
+            // User message
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('chatbot-message', 'user');
+            userMessage.innerHTML = `<div class="message-content">${message}</div>`;
+            chatbotBody.appendChild(userMessage);
+
+            // Clear input
+            input.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('chatbot-message', 'bot');
+                botMessage.innerHTML = `<div class="message-content">I'm here to help! What would you like to know about test reports?</div>`;
+                chatbotBody.appendChild(botMessage);
+                chatbotBody.scrollTop = chatbotBody.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
